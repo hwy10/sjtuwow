@@ -1,0 +1,10 @@
+extends layout
+
+block content
+	div.container
+		h3 #{pageTitle}
+		div.editormd#notice-editormd
+			textarea(style="display:none;") #{markdown}
+		div.btn-group
+			button(type="button",class="btn btn-primary",data-bind="click:submit",data-target="#{target}")提交
+	script(type='text/javascript',src="/static/javascripts/notice.js")

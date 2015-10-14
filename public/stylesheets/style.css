@@ -1,0 +1,21 @@
+/* body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+ */
+img.brand {
+	margin-top:-5px;
+	margin-right:5px;
+}
+
+div.form-group > div.alert {
+	padding:10px;
+}
+
+h3 {
+	margin-left:-15px;
+}
