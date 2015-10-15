@@ -1,3 +1,9 @@
 .log
 node_modules
 database/settings.js
+
+######################
+## VS code 
+######################
+
+.vscode/
