@@ -11,44 +11,43 @@ function ViewModel() {
 		name : ko.observable(),
 		race : ko.observable(),
 		profession : ko.observable(),
-		dutys : ko.observableArray([]),
+		dutys : ko.observableArray([])
 	};
-	var Option = function(value,name)
-	{
+	function Option(value, name) {
 		this.value = value;
 		this.name = name;
 	}
 	self.races = [
-		new Option("human","人类"),
-		new Option("ne","暗夜"),
-		new Option("dwarf","矮人"),
-		new Option("dwarfism","侏儒"),
-		new Option("werewolf","狼人"),
-		new Option("delaney","德莱尼"),
-		new Option("panda","熊猫人"),
+		new Option("human", "人类"),
+		new Option("ne", "暗夜"),
+		new Option("dwarf", "矮人"),
+		new Option("dwarfism", "侏儒"),
+		new Option("werewolf", "狼人"),
+		new Option("delaney", "德莱尼"),
+		new Option("panda", "熊猫人")
 	];
 	self.raceKeyValue = {
-		"human" :"人类",
+		"human" : "人类",
 		"ne" : "暗夜",
 		"dwarf" : "矮人",
 		"dwarfism" : "侏儒",
 		"werewolf" : "狼人",
 		"delaney" : "德莱尼",
-		"panda" : "熊猫人",
+		"panda" : "熊猫人"
 	};
 	self.professions = [
-		new Option("paladin","圣骑士"),
-		new Option("druid","德鲁伊"),
-		new Option("brave","战士"),
-		new Option("mage","法师"),
-		new Option("warlock","术士"),
-		new Option("bandit","盗贼"),
-		new Option("hunter","猎人"),
-		new Option("priest","牧师"),
-		new Option("shaman","萨满"),
-		new Option("deadknight","死骑"),
-		new Option("monk","武僧"),
-	]
+		new Option("paladin", "圣骑士"),
+		new Option("druid", "德鲁伊"),
+		new Option("brave", "战士"),
+		new Option("mage", "法师"),
+		new Option("warlock", "术士"),
+		new Option("bandit", "盗贼"),
+		new Option("hunter", "猎人"),
+		new Option("priest", "牧师"),
+		new Option("shaman", "萨满"),
+		new Option("deadknight", "死骑"),
+		new Option("monk", "武僧")
+	];
 	self.professionKeyValue = {
 		"paladin" : "圣骑士",
 		"druid" : "德鲁伊",
@@ -60,16 +59,16 @@ function ViewModel() {
 		"priest" : "牧师",
 		"shaman" : "萨满",
 		"deadknight" : "死骑",
-		"monk" : "武僧",
-	}
+		"monk" : "武僧"
+	};
 	self.dutys = [
-		new Option('1',"坦克"),
-		new Option('2',"治疗"),
-		new Option('4',"输出"),
-	]
-	self.getInfo = function(){
-		var url = "/users/userInfo"
-		$.get(url,{},function(data,event){
+		new Option('1', "坦克"),
+		new Option('2', "治疗"),
+		new Option('4', "输出")
+	];
+	self.getInfo = function () {
+		var url = "/users/userInfo";
+		$.get(url, {}, function(data, event){
 			if(data.status == 0)
 			{
 				self.username(data.data.username);
@@ -81,11 +80,11 @@ function ViewModel() {
 				self.message(data.message)
 			}
 		},'json')
-	}
-	self.onfocus = function(data,event) {
+	};
+	self.onfocus = function(data, event) {
 		$(event.target).parents("div.form-group").removeClass("has-success")
-	}
-	self.onchange = function(data,event) {
+	};
+	self.onchange = function(data, event) {
 		$(event.target).parents("div.form-group").removeClass("has-success")
 		if(!event.target.checkValidity()){
 			$(event.target).parents("div.form-group").addClass("has-error")
@@ -96,7 +95,7 @@ function ViewModel() {
 			self.message("")
 		}
 		var field = $(event.target).attr("name");
-		$.post("/users/userInfo",{data:self[field](),field:field},function(data,event){
+		$.post("/users/userInfo",{data:self[field](), field:field},function(data, event){
 			if(data.status == 0)
 			{
 				$("input[name="+data.field+"]").parents("div.form-group").addClass("has-success")
@@ -109,8 +108,8 @@ function ViewModel() {
 				self.message(data.message)
 			}
 		},'json')
-	}
-	self.convertDuty = function(data){
+	};
+	self.convertDuty = function(data) {
 		var result = ""
 		for(var i in self.dutys)
 		{
@@ -121,10 +120,10 @@ function ViewModel() {
 			}
 		}
 		return result;
-	}
+	};
 	self.getCharacters = function(){
 		var url = "/users/character"
-		$.get(url,{},function(data,event){
+		$.get(url, {}, function(data,event){
 			if(data.status == 0)
 			{
 				self.characterMessage("")
@@ -135,7 +134,7 @@ function ViewModel() {
 				self.characterMessage(data.message)
 			}
 		},'json')
-	}
+	};
 	self.deleteCharacter = function(data,event){
 		var id = $(event.target).attr("data-target")
 		var url = "/users/character"
@@ -157,10 +156,10 @@ function ViewModel() {
 					self.characterMessage(data.message)
 					}
 				}})
-	}
+	};
 	self.newCharacter = function(){
 		var url = "/users/character"
-		$.post(url,self.form,function(data,event){
+		$.post(url, self.form, function(data, event){
 			if(data.status == 0)
 			{
 				self.characterMessage("")
@@ -175,7 +174,7 @@ function ViewModel() {
 				self.characterMessage(data.message)
 			}
 		},'json')
-	}
+	};
 	
 	self.disable = ko.observable(false);
 }
