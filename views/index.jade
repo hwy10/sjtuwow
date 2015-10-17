@@ -1,21 +1,21 @@
 extends layout
 
 block content
-	div.container
-		div.row
-			div.col-md-4
-				div.panel.panel-primary
-					div.panel-heading
-						div.panel-title 
-							a.notice(href="#",data-target="notice",data-bind="{click:updateNotice}") 通知公告
-					div.panel-body
-						div#notice
-				div.panel.panel-primary
-					div.panel-heading
-						div.panel-title
-							a.notice(href="#",data-target="resource",data-bind="{click:updateNotice}") 资源分享
-					div.panel-body
-						div#resource
-			
-			div.col-md-8
-	script(type='text/javascript',src="/static/javascripts/index.js")
+  div.container
+    div.row
+      div.col-md-4
+        div.panel.panel-primary
+          div.panel-heading
+            div.panel-title 
+              a.notice(href="#",data-target="notice",data-bind="{click:updateNotice}") 通知公告
+          div.panel-body
+            div#notice
+        div.panel.panel-primary
+          div.panel-heading
+            div.panel-title
+              a.notice(href="#",data-target="resource",data-bind="{click:updateNotice}") 资源分享
+          div.panel-body
+            div#resource
+      
+      div.col-md-8
+  script(type='text/javascript',src="/static/javascripts/index.js")

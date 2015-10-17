@@ -1,54 +1,54 @@
 extends ../layout
 
 block content
-	div.container
-		div.row
-			div.col-md-6.col-md-offset-3
-				form(role="form",class="form-horizontal")
-					div.form-group
-						label(for="username") 用户名
-						input(type="text",class="form-control",id='username',name='username',required,disabled,data-bind="value: username, event:{change:onchange,focus:onfocus}")
-					div.form-group
-						label(for="name") 昵称
-						input(type="text",class="form-control",id='name',name='name',required,data-bind="value: name, event:{change:onchange,focus:onfocus}")
-					div.form-group
-						label(for="email") 邮箱
-						input(type="email",class="form-control",id='email',name='email',required,data-bind="value: email, event:{change:onchange,focus:onfocus}")
-					div.form-group(data-bind="visible:message")
-						div.alert.alert-danger(data-bind="text:message")
-			div.col-md-8.col-md-offset-2
-				table.table.table-striped
-					thead
-						th 角色名
-						th 种族
-						th 职业
-						th 职责
-						th
-					tbody
-						<!-- ko foreach: characters -->
-						tr
-							td(data-bind="text: $data.name")
-							td(data-bind="text: $root.raceKeyValue[$data.race]")
-							td(data-bind="text: $root.professionKeyValue[$data.profession]")
-							td(data-bind="text: $root.convertDuty($data.duty)")
-							td
-								a(class="btn",href="#",data-bind="click:$root.deleteCharacter,attr:{'data-target':$data.id}")
-									span(class="glyphicon glyphicon-remove",aria-hidden="true")
-						<!-- /ko -->
-						tr
-							form(role="form",class="form-horizontal",data-bind="submit:$root.newCharacter")
-								td
-									input(type="text",class="form-control",id="characterName",name='name',required,data-bind="value: $root.form.name")
-								td(data-bind="value: $data.form.race")
-									select(class="form-control",id="characterRace",name='race',required,data-bind="options:$root.races,optionsValue:'value',optionsText:'name',value: $root.form.race")
-								td(data-bind="value: $data.form.profession")
-									select(class="form-control",id="characterProfession",name='profession',required,data-bind="options:$root.professions,optionsValue:'value',optionsText:'name',value: $root.form.profession")
-								td(data-bind="foreach:$root.dutys")
-									input(type="checkbox",name='duty',required,data-bind="checked:$root.form.dutys,value:$data.value")
-									span(data-bind="text:$data.name")
-								td
-									button(type='submit',class='btn btn-primary')
-										span(class="glyphicon glyphicon-plus",aria-hidden="true",data-bind="attr:{'data-target':$data.id}")
-					div(data-bind="visible:characterMessage")
-						div.alert.alert-danger(data-bind="text:characterMessage")
-	script(type='text/javascript',src="/static/javascripts/changeInfo.js")
+  div.container
+    div.row
+      div.col-md-6.col-md-offset-3
+        form(role="form",class="form-horizontal")
+          div.form-group
+            label(for="username") 用户名
+            input(type="text",class="form-control",id='username',name='username',required,disabled,data-bind="value: username, event:{change:onchange,focus:onfocus}")
+          div.form-group
+            label(for="name") 昵称
+            input(type="text",class="form-control",id='name',name='name',required,data-bind="value: name, event:{change:onchange,focus:onfocus}")
+          div.form-group
+            label(for="email") 邮箱
+            input(type="email",class="form-control",id='email',name='email',required,data-bind="value: email, event:{change:onchange,focus:onfocus}")
+          div.form-group(data-bind="visible:message")
+            div.alert.alert-danger(data-bind="text:message")
+      div.col-md-8.col-md-offset-2
+        table.table.table-striped
+          thead
+            th 角色名
+            th 种族
+            th 职业
+            th 职责
+            th
+          tbody
+            <!-- ko foreach: characters -->
+            tr
+              td(data-bind="text: $data.name")
+              td(data-bind="text: $root.raceKeyValue[$data.race]")
+              td(data-bind="text: $root.professionKeyValue[$data.profession]")
+              td(data-bind="text: $root.convertDuty($data.duty)")
+              td
+                a(class="btn",href="#",data-bind="click:$root.deleteCharacter,attr:{'data-target':$data.id}")
+                  span(class="glyphicon glyphicon-remove",aria-hidden="true")
+            <!-- /ko -->
+            tr
+              form(role="form",class="form-horizontal",data-bind="submit:$root.newCharacter")
+                td
+                  input(type="text",class="form-control",id="characterName",name='name',required,data-bind="value: $root.form.name")
+                td(data-bind="value: $data.form.race")
+                  select(class="form-control",id="characterRace",name='race',required,data-bind="options:$root.races,optionsValue:'value',optionsText:'name',value: $root.form.race")
+                td(data-bind="value: $data.form.profession")
+                  select(class="form-control",id="characterProfession",name='profession',required,data-bind="options:$root.professions,optionsValue:'value',optionsText:'name',value: $root.form.profession")
+                td(data-bind="foreach:$root.dutys")
+                  input(type="checkbox",name='duty',required,data-bind="checked:$root.form.dutys,value:$data.value")
+                  span(data-bind="text:$data.name")
+                td
+                  button(type='submit',class='btn btn-primary')
+                    span(class="glyphicon glyphicon-plus",aria-hidden="true",data-bind="attr:{'data-target':$data.id}")
+          div(data-bind="visible:characterMessage")
+            div.alert.alert-danger(data-bind="text:characterMessage")
+  script(type='text/javascript',src="/static/javascripts/changeInfo.js")
