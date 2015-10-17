@@ -1,6 +1,7 @@
 *.log
+*.swp
 node_modules
-database/settings.js
+config.json
 
 ######################
 ## VS code 
