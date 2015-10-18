@@ -17,7 +17,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false })); app.use(cookieParser());
 app.use(methodOverride());
-app.use(settings.STATIC_ROOT, express.static(settings.STATIC_ROOT));
+app.use(settings.STATIC_URL, express.static(settings.STATIC_ROOT));
 app.use(session({
   secret: settings.SECRET_KEY,
   name: settings.SESSION_NAME,
