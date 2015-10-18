@@ -11,15 +11,21 @@ exports.db = db;
 
 // TODO
 // Add fields needed for BattleNetAPI @GanZhenye
-var User = db.define('User', { uuid: Sequelize.STRING }, {
+var User = db.define('User', {
+  uuid: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    unique: true
+  }
+}, {
   underscored: true,
   tableName: 'user'
 });
 exports.User = User;
 
 var Notice = db.define('Notice', {
-  authorUuid: {
-    field: 'author_uuid',
+  authorId: {
+    field: 'author_id',
     type: Sequelize.STRING,
     allowNull: false,
   },
@@ -35,8 +41,8 @@ var Notice = db.define('Notice', {
 exports.Notice = Notice;
 
 var Event = db.define('Event', {
-  launcherUuid: {
-    field: 'launcher_uuid',
+  launcherId: {
+    field: 'launcher_id',
     type: Sequelize.STRING,
     allowNull: false
   },
@@ -45,8 +51,8 @@ var Event = db.define('Event', {
     values: ['ONLINE', 'OFFLINE'],
     allowNull: false,
   },
-  startTime: {
-    field: 'start_time',
+  startAt: {
+    field: 'start_at',
     type: Sequelize.DATE,
     defaultValue: Sequelize.NOW
   },
@@ -62,9 +68,40 @@ var Event = db.define('Event', {
     type: Sequelize.TEXT,
     defaultValue: ''
   },
-    // participantUuid: Sequelize.STRING
 }, {
   underscored: true,
   tableName: 'event'
 });
 exports.Event = Event;
+
+var React = db.define('React', {
+  eventId: {
+    field: 'event_id',
+    type: Sequelize.INTEGER.UNSIGNED,
+    allowNull: false
+  },
+  participantId: {
+    field: 'participant_id',
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  replyStatus: {
+    field: 'replay_status',
+    type: Sequelize.ENUM,
+    values: ['PENDING', 'ACCEPT', 'DENY', 'DELAY'],
+    allowNull: false
+  },
+  replyAt: {
+    field: 'reply_at',
+    type: Sequelize.DATE
+  },
+  replyContent: {
+    field: 'replay_content',
+    type: Sequelize.STRING,
+    defaultValue: ''
+  }
+}, {
+  underscored: true,
+  tableName: 'react'
+});
+exports.React = React;

@@ -56,17 +56,6 @@ var users = require('./routes/users');
 app.use('/users', users);
 
 /*
- * Catch 404 and forward to error handler
- * TODO
- * This is something wrong since this will make epilogue failed!. From HuangYichao.
- */
-// app.use(function (req, res, next) {
-//   var err = new Error('Not Found');
-//   err.status = 404;
-//   next(err);
-// });
-
-/*
  * error handlers
  * development error handler
  *  will print stacktrace
