@@ -1,10 +1,11 @@
 *.log
 *.swp
-node_modules
+
 config.json
 
-######################
-## VS code 
-######################
+node_modules
 
-.vscode/
+## For VS code 
+.vscode/*
+typings/*
+
