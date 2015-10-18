@@ -14,5 +14,9 @@ epilogue.initialize({
 var NoticeResource = epilogue.resource({
   model: models.Notice,
 });
+exports.NoticeResource = NoticeResource;
 
-exports.NoticeResource = NoticeResource
+var EventResource = epilogue.resource({
+  model: models.Event,
+});
+exports.EventResource = EventResource;

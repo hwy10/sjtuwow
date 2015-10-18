@@ -95,5 +95,8 @@ app.use(function (err, req, res, next) {
 
 module.exports = app;
 
+/*
+ * Just to init them.
+ */
 require('./resources');
 require('./models');

@@ -11,11 +11,60 @@ exports.db = db;
 
 // TODO
 // Add fields needed for BattleNetAPI @GanZhenye
-var User = db.define('user', { uuid: Sequelize.STRING }, { freezeTableName: true });
+var User = db.define('User', { uuid: Sequelize.STRING }, {
+  underscored: true,
+  tableName: 'user'
+});
 exports.User = User;
 
-var Notice = db.define('notice', {
-  content: Sequelize.TEXT,
-  userUid: Sequelize.STRING
-}, { freezeTableName: true });
+var Notice = db.define('Notice', {
+  authorUuid: {
+    field: 'author_uuid',
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  content: {
+    type: Sequelize.TEXT,
+    allowNull: false,
+    defaultValue: ''
+  }
+}, {
+  underscored: true,
+  tableName: 'notice'
+});
 exports.Notice = Notice;
+
+var Event = db.define('Event', {
+  launcherUuid: {
+    field: 'launcher_uuid',
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  type: {
+    type: Sequelize.ENUM,
+    values: ['ONLINE', 'OFFLINE'],
+    allowNull: false,
+  },
+  startTime: {
+    field: 'start_time',
+    type: Sequelize.DATE,
+    defaultValue: Sequelize.NOW
+  },
+  address: {
+    type: Sequelize.STRING,
+    defaultValue: ''
+  },
+  title: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  description: {
+    type: Sequelize.TEXT,
+    defaultValue: ''
+  },
+    // participantUuid: Sequelize.STRING
+}, {
+  underscored: true,
+  tableName: 'event'
+});
+exports.Event = Event;
