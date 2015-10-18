@@ -11,6 +11,7 @@ exports.db = db;
 
 // TODO
 // Add fields needed for BattleNetAPI @GanZhenye
+// And it seems UserGroup is needed since the event should be send to a group of users instead of one by one.
 var User = db.define('User', {
   uuid: {
     type: Sequelize.STRING,

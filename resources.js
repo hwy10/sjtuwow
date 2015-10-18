@@ -11,6 +11,12 @@ epilogue.initialize({
   base: path.join(settings.API_URL, '/v1')
 });
 
+var UserResource = epilogue.resource({
+  model: models.User,
+  actions: ['read', 'update', 'list']
+});
+exports.UserResource = UserResource;
+
 var NoticeResource = epilogue.resource({
   model: models.Notice,
 });
