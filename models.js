@@ -86,6 +86,11 @@ var React = db.define('React', {
     type: Sequelize.STRING,
     allowNull: false
   },
+  wowRole: {
+    field: 'wow_role',
+    type: Sequelize.STRING,
+    allowNull: true
+  },
   replyStatus: {
     field: 'replay_status',
     type: Sequelize.ENUM,
