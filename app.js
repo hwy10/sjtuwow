@@ -28,32 +28,29 @@ app.use(session({
 
 // TODO
 // Wait to be recoded for BattleNetAPI @GanZhenye
-//
-// app.use(function (req, res, next) {
-//   var url = req.originalUrl;
-//   if (req.session.user) {
-//     var connection = require('./database/db');
-//     connection.query('SELECT * FROM user WHERE id=?', [req.session.user.id], function (err, rows, fields) {
-//       if (!err) {
-//         req.session.user = {
-//           username: rows[0].username,
-//           name: rows[0].name,
-//           email: rows[0].email,
-//           id: rows[0].id
-//         }
-//       }
-//     });
-//     res.locals.user = req.session.user
-//   } else if (!url.startsWith('/users/login') && !url.startsWith('/users/register') && !url.startsWith('/static/')) {
-//     return res.redirect('/users/login')
-//   }
-//   next()
-// });
 
-var routes = require('./routes/index');
-app.use('/', routes);
-var users = require('./routes/users');
-app.use('/users', users);
+app.use(function (req, res, next) {
+  var url = req.originalUrl;
+  if (url.startsWith(settings.STATIC_URL)
+      || url.startsWith('/auth/login') || url.startsWith('/auth/logout')) {
+    // No auth needed.
+    next();
+  } else if (url.startsWith(settings.API_URL)) {
+    // TODO
+    // API Auth
+    next();
+  } else {
+    // Page Auth
+    if (!req.session.user) {
+      return res.redirect('/auth/login');
+    }
+  }
+  // res.locals.user = req.session.user
+});
+
+app.use('/', require('./routes/index'));
+app.use('/', require('./routes/auth'));
+app.use('/users', require('./routes/users'));
 
 /*
  * error handlers
