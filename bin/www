@@ -22,7 +22,7 @@ var httpsopt = {
 };
 
 /**
- * Create HTTP server.
+ * Create HTTPS server.
  */
 
 var server = https.createServer(httpsopt, app);
