@@ -5,13 +5,7 @@ config.json
 
 node_modules
 
-<<<<<<< HEAD
 ## For VS code 
 .vscode/*
 typings/*
 
-=======
-## VS code 
-.vscode/
-typings/*
->>>>>>> bnet_test
