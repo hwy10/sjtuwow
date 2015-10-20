@@ -28,12 +28,16 @@ var httpsopt = {
 var server = https.createServer(httpsopt, app);
 
 /**
- * Listen on provided port, on all network interfaces.
+ * Start server after init db.
  */
-
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+db.sync({ hooks: true }).then(function () {
+  /**
+   * Listen on provided port, on all network interfaces.
+   */
+  server.listen(port);
+  server.on('error', onError);
+  server.on('listening', onListening); 
+});
 
 /**
  * Normalize a port into a number, string, or false.
