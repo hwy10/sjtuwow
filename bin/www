@@ -4,12 +4,11 @@
  * Module dependencies.
  */
 
+var settings = require('../settings.js');
 var app = require('../app');
 var debug = require('debug')('sjtuwow:server');
-//var http = require('http');
 var https = require('https');
 var fs = require('fs');
-var settings = require('../settings.js');
 /**
  * Get port from environment and store in Express.
  */
