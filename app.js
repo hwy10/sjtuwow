@@ -6,7 +6,13 @@ var methodOverride = require('method-override');
 var session = require('express-session');
 var settings = require('./settings');
 
+var routes = require('./routes/index');
+var users = require('./routes/users');
+var auth = require('./routes/auth');
+
 var app = express();
+
+var passport = require('passport')
 
 /*
  * Configure middlewares.
@@ -26,33 +32,18 @@ app.use(session({
   cookie: { maxAge: settings.COOKIE_TIMEOUT }
 }));
 
-// TODO
-// Wait to be recoded for BattleNetAPI @GanZhenye
-//
-// app.use(function (req, res, next) {
-//   var url = req.originalUrl;
-//   if (req.session.user) {
-//     var connection = require('./database/db');
-//     connection.query('SELECT * FROM user WHERE id=?', [req.session.user.id], function (err, rows, fields) {
-//       if (!err) {
-//         req.session.user = {
-//           username: rows[0].username,
-//           name: rows[0].name,
-//           email: rows[0].email,
-//           id: rows[0].id
-//         }
-//       }
-//     });
-//     res.locals.user = req.session.user
-//   } else if (!url.startsWith('/users/login') && !url.startsWith('/users/register') && !url.startsWith('/static/')) {
-//     return res.redirect('/users/login')
-//   }
-//   next()
-// });
+app.use(passport.initialize()); 
+app.use(passport.session()); 
 
-var routes = require('./routes/index');
+app.use(function (req, res, next) {
+  console.log(req.url);
+  console.log(" session = " + require('util').inspect( req.session));
+  console.log(" user = " + require('util').inspect( req.user));
+  next();
+});
+
+app.use('/auth', auth);
 app.use('/', routes);
-var users = require('./routes/users');
 app.use('/users', users);
 
 /*
