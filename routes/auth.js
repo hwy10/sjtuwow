@@ -24,9 +24,10 @@ var router = express.Router();
 var BnetStrategy = require('passport-bnet').Strategy;
 var passport = require('passport')
 var oauth2 = require('../.vscode/oauth2.js');
+var settings = require('../settings.js');
 
-console.log(oauth2.BN_KEY);
-console.log(oauth2.BN_SECRET);
+console.log(settings.BN_OAUTH.KEY);
+console.log(settings.BN_OAUTH.SECRET);
 
 passport.serializeUser(function(user, done) { 
     done(null, user); 
@@ -37,11 +38,11 @@ passport.deserializeUser(function(obj, done) {
 });   
 
 passport.use(new BnetStrategy({
-    clientID: oauth2.BN_KEY,
-    clientSecret: oauth2.BN_SECRET,
+    clientID: settings.BN_OAUTH.KEY,
+    clientSecret: settings.BN_OAUTH.SECRET,
     scope: "wow.profile",
     region: "cn",
-    callbackURL: "https://sjtuwow.azurewebsites.net/auth/login/callback"
+    callbackURL: settings.BN_CALLBACK
 }, function(accessToken, refreshToken, profile, done) {
     //console.log("refresh Token = " + refreshToken);
     //console.log("access Token = " + accessToken);

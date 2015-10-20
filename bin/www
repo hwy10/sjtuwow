@@ -9,15 +9,16 @@ var debug = require('debug')('sjtuwow:server');
 //var http = require('http');
 var https = require('https');
 var fs = require('fs');
+var settings = require('../settings.js');
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || /*'80'*/'443');
+var port = normalizePort(process.env.PORT || settings.SEVER_PORT);
 app.set('port', port);
 var httpsopt = {
-  key: fs.readFileSync('./.vscode/rsaprivatekey.pem'),
-  cert: fs.readFileSync('./.vscode/certificate.pem')  
+  key: fs.readFileSync(settings.SITE_HTTPS_KEY),
+  cert: fs.readFileSync(settings.SITE_HTTPS_CERT)  
 };
 
 /**

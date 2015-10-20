@@ -11,7 +11,13 @@ nconf.file(path.join(__dirname, 'config.json'));
 exports.SECRET_KEY = 'E1925844EDED520E2B8B6CCD4F21E911';
 
 exports.DEBUG = true;
-exports.SEVER_PORT = 3000;
+exports.SEVER_PORT = 443;
+
+/*
+ * https setttings
+ */
+exports.SITE_HTTPS_KEY = nconf.get('SITE_HTTPS_KEY') ? nconf.get('SITE_HTTPS_KEY') : '';
+exports.SITE_HTTPS_CERT = nconf.get('SITE_HTTPS_CERT') ? nconf.get('SITE_HTTPS_CERT') : '';
 
 exports.STATIC_URL = '/static';
 exports.STATIC_ROOT = path.join(__dirname, 'public');
@@ -40,8 +46,13 @@ exports.COOKIE_TIMEOUT = 7 * 24 * 60 * 60 * 1000;
  *   "DB_NAME" : "sjtuwow",
  *   "DB_USERNAME" : "root",
  *   "DB_PASSWORD" : "123456",
- *   "BN_KEY": "xxxxx",
- *   "BN_SECRET": "xxxxx",
+ *   "BN_OAUTH": 
+ *   {
+ * 		"KEY": "xxxxx",
+ *   	"SECRET": "xxxxx",
+ *   },
+ *   "SITE_HTTPS_KEY": "xxx.pem"
+ *   "SITE_HTTPS_CERT": "xxx.pem"
  * }
  */
 
@@ -55,3 +66,9 @@ exports.DB_NAME = nconf.get('DB_NAME') ? nconf.get('DB_NAME') : '';
 exports.DB_USERNAME = nconf.get('DB_USERNAME') ? nconf.get('DB_USERNAME') : '';
 exports.DB_PASSWORD = nconf.get('DB_PASSWORD') ? nconf.get('DB_PASSWORD') : '';
 exports.DB_TIMEZONE = nconf.get('DB_TIMEZONE') ? nconf.get('DB_TIMEZONE') : '+00:00';
+
+/*
+ * BN oauth Constants
+ */
+exports.BN_OAUTH = nconf.get('BN_OAUTH') ? nconf.get('BN_OAUTH') : {};
+exports.BN_CALLBACK = "https://sjtuwow.azurewebsites.net/auth/login/callback";
