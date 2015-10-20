@@ -1,45 +1,65 @@
-var express = require('express');
-var User = require('../models').User;
+/*
+ * Authentication module
+ * To navigate the user to BN login page:
+ *    1. navigate to url '/auth/login'.
+ *    2. user login battlenet
+ *    3. redirect to '/auth/login/callback', finish session processing
+ *    4. redirect to '/'
+ * 
+ * To nabigate the user to logout:
+ *    1. navigate to url 'auth/logout'.
+ *    2. finish session processing
+ *    3. redirect to '/'
+ * 
+ * After user logged in, user profile is stored both in *req.session.passport.user* 
+ * and *req.user*, and contains three fields: id, battletag, accessToken. 
+ *
+ * TODO
+ * Is there some way to notice BN that user has logged out in '/auth/login'
+ * 
+ */
 
+var express = require('express');
 var router = express.Router();
 
-router.get('/auth/login', function (req, res, next) {
-  return res.render('auth/login', { activePage: 'login' });
-});
+var BnetStrategy = require('passport-bnet').Strategy;
+var passport = require('passport');
 
-// TODO
-// Wait to be replaced by BattleNetAPI @GunZhenye
-// The following is only for test.
-router.post('/auth/login', function (req, res, next) {
-  var username = req.body.username;
-  var password = req.body.password;
+var User = require('../models').User;
+var settings = require('../settings.js');
 
-  User.findAll({
-    where: {
-      id: username,
-      uuid: password
-    }
-  }).then(function (users) {
-    if (users.length > 0) {
-      req.session.user = users[0].id;
-      res.json({
-        status: 0,
-        message: '登陆成功'
-      });
-    } else {
-      req.session.user = null;
-      res.json({
-        status: 1,
-        message: '用户名密码错误,请重试'
-      });
-    }
+passport.serializeUser(function(user, done) { 
+  done(null, user); 
+}); 
+
+passport.deserializeUser(function(obj, done) { 
+  done(null, obj); 
+});   
+
+passport.use(new BnetStrategy({
+  clientID: settings.BN_OAUTH.KEY,
+  clientSecret: settings.BN_OAUTH.SECRET,
+  scope: 'wow.profile',
+  region: 'cn',
+  callbackURL: settings.BN_CALLBACK
+}, function(accessToken, refreshToken, profile, done) {
+  profile.accessToken = accessToken;
+  var str = JSON.stringify(profile);
+  return done(null, str);
+}));
+
+router.get('/login', passport.authenticate('bnet'));
+router.get('/login/callback', passport.authenticate('bnet', { failureRedirect: 'http://www.baidu.com' }),
+  function(req, res) { 
+    req.user = JSON.parse(req.user);
+    req.session.passport.user = JSON.parse(req.session.passport.user);
     res.redirect('/');
-  });
+  }); 
+
+router.get('/logout', function(req, res){
+  req.logout();
+  //TODO: is there some way to notice BN that user has logged out?
+  res.redirect('/');
 });
 
-router.get('/auth/logout', function (req, res, next){
-  req.session.user = null;
-  return res.redirect('/auth/login');
-})
-
-module.exports = router
+module.exports = router;

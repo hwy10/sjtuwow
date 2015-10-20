@@ -11,7 +11,8 @@ nconf.file(path.join(__dirname, 'config.json'));
 exports.SECRET_KEY = 'E1925844EDED520E2B8B6CCD4F21E911';
 
 exports.DEBUG = true;
-exports.SEVER_PORT = 3000;
+
+exports.SEVER_PORT = 443;
 
 exports.STATIC_URL = '/static';
 exports.STATIC_ROOT = path.join(__dirname, 'public');
@@ -39,17 +40,36 @@ exports.COOKIE_TIMEOUT = 7 * 24 * 60 * 60 * 1000;
  * {
  *   "DB_NAME" : "sjtuwow",
  *   "DB_USERNAME" : "root",
- *   "DB_PASSWORD" : "123456"
+ *   "DB_PASSWORD" : "123456",
+ *   "BN_OAUTH": {
+ * 		"KEY": "your_key",
+ *   	"SECRET": "your_key_secret",
+ *   },
+ *   "SITE_HTTPS_KEY": "/home/your_user/your_private_key.pem"
+ *   "SITE_HTTPS_CERT": "/home/your_user/your_cert.pem"
  * }
  */
 
 /*
+ * https setttings
+ */
+exports.SITE_HTTPS_KEY = nconf.get('SITE_HTTPS_KEY') || path.join(__dirname, 'private_key.pem');
+exports.SITE_HTTPS_CERT = nconf.get('SITE_HTTPS_CERT')|| path.join(__dirname, 'cert.pem');
+
+/*
  * DB Constants
  */
-exports.DB_HOST = nconf.get('DB_HOST') ? nconf.get('DB_HOST') : '127.0.0.1';
-exports.DB_PORT = nconf.get('DB_PORT') ? nconf.get('DB_PORT') : '3306';
-exports.DB_DIALECT = nconf.get('DB_DIALECT') ? nconf.get('DB_DIALECT') : 'mysql';
-exports.DB_NAME = nconf.get('DB_NAME') ? nconf.get('DB_NAME') : '';
-exports.DB_USERNAME = nconf.get('DB_USERNAME') ? nconf.get('DB_USERNAME') : '';
-exports.DB_PASSWORD = nconf.get('DB_PASSWORD') ? nconf.get('DB_PASSWORD') : '';
-exports.DB_TIMEZONE = nconf.get('DB_TIMEZONE') ? nconf.get('DB_TIMEZONE') : '+00:00';
+exports.DB_HOST = nconf.get('DB_HOST') || '127.0.0.1';
+exports.DB_PORT = nconf.get('DB_PORT') || '3306';
+exports.DB_DIALECT = nconf.get('DB_DIALECT') || 'mysql';
+exports.DB_NAME = nconf.get('DB_NAME') || '';
+exports.DB_USERNAME = nconf.get('DB_USERNAME') || '';
+exports.DB_PASSWORD = nconf.get('DB_PASSWORD') || '';
+exports.DB_TIMEZONE = nconf.get('DB_TIMEZONE') || '+00:00';
+
+/*
+ * BN oauth Constants
+ */
+exports.BN_OAUTH = nconf.get('BN_OAUTH') || {'KEY':'', 'SECRET':''};
+exports.BN_CALLBACK = 'https://sjtuwow.azurewebsites.net/auth/login/callback';
+

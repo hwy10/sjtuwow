@@ -1,5 +1,7 @@
 *.log
 *.swp
+*.orig
+*.pem
 
 config.json
 

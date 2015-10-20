@@ -4,6 +4,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var session = require('express-session');
+var passport = require('passport');
+
 var settings = require('./settings');
 
 var app = express();
@@ -26,13 +28,12 @@ app.use(session({
   cookie: { maxAge: settings.COOKIE_TIMEOUT }
 }));
 
-// TODO
-// Wait to be recoded for BattleNetAPI @GanZhenye
+app.use(passport.initialize()); 
+app.use(passport.session()); 
 
 app.use(function (req, res, next) {
   var url = req.originalUrl;
-  if (url.startsWith(settings.STATIC_URL)
-      || url.startsWith('/auth/login') || url.startsWith('/auth/logout')) {
+  if (url.startsWith(settings.STATIC_URL) || url.startsWith('/auth')) {
     // No auth needed.
     next();
   } else if (url.startsWith(settings.API_URL)) {
@@ -41,15 +42,15 @@ app.use(function (req, res, next) {
     next();
   } else {
     // Page Auth
-    if (!req.session.user) {
+    if (!req.session.passport) {
       return res.redirect('/auth/login');
     }
+    next();
   }
-  // res.locals.user = req.session.user
 });
 
 app.use('/', require('./routes/index'));
-app.use('/', require('./routes/auth'));
+app.use('/auth', require('./routes/auth'));
 app.use('/users', require('./routes/users'));
 
 /*

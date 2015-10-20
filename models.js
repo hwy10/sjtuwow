@@ -9,6 +9,7 @@ var db = new Sequelize(settings.DB_NAME, settings.DB_USERNAME, settings.DB_PASSW
 });
 exports.db = db;
 
+
 // TODO
 // Add fields needed for BattleNetAPI @GanZhenye
 // And it seems UserGroup is needed since the event should be send to a group of users instead of one by one.
