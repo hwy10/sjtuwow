@@ -9,6 +9,7 @@ var app = require('../app');
 var debug = require('debug')('sjtuwow:server');
 var https = require('https');
 var fs = require('fs');
+var db = require('../models').db;
 /**
  * Get port from environment and store in Express.
  */
