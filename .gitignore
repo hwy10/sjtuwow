@@ -1,13 +1,10 @@
 *.log
 *.swp
 
-node_modules
-
 config.json
 
-######################
-## VS code 
-######################
+node_modules
 
+## VS code 
 .vscode/
 typings/*
