@@ -13,35 +13,6 @@ var fs = require('fs');
 var db = require('../models').db;
 
 /**
- * Get port from environment and store in Express.
- */
-
-var port = normalizePort(process.env.PORT || settings.SEVER_PORT);
-app.set('port', port);
-var httpsopt = {
-  key: fs.readFileSync(settings.SITE_HTTPS_KEY),
-  cert: fs.readFileSync(settings.SITE_HTTPS_CERT)  
-};
-
-/**
- * Create HTTPS server.
- */
-
-var server = https.createServer(httpsopt, app);
-
-/**
- * Start server after init db.
- */
-db.sync({ hooks: true }).then(function () {
-  /**
-   * Listen on provided port, on all network interfaces.
-   */
-  server.listen(port);
-  server.on('error', onError);
-  server.on('listening', onListening); 
-});
-
-/**
  * Normalize a port into a number, string, or false.
  */
 function normalizePort(val) {
@@ -59,6 +30,22 @@ function normalizePort(val) {
 
   return false;
 }
+
+/**
+ * Get port from environment and store in Express.
+ */
+var port = normalizePort(process.env.PORT || settings.SEVER_PORT);
+app.set('port', port);
+var httpsopt = {
+  key: fs.readFileSync(settings.SITE_HTTPS_KEY),
+  cert: fs.readFileSync(settings.SITE_HTTPS_CERT)  
+};
+
+/**
+ * Create HTTPS server.
+ */
+
+var server = https.createServer(httpsopt, app);
 
 /**
  * Event listener for HTTP server "error" event.
@@ -99,3 +86,15 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+/**
+ * Start server after init db.
+ */
+db.sync({ hooks: true }).then(function () {
+  /**
+   * Listen on provided port, on all network interfaces.
+   */
+  server.listen(port);
+  server.on('error', onError);
+  server.on('listening', onListening); 
+});

@@ -9,21 +9,94 @@ var db = new Sequelize(settings.DB_NAME, settings.DB_USERNAME, settings.DB_PASSW
 });
 exports.db = db;
 
-
-// TODO
-// Add fields needed for BattleNetAPI @GanZhenye
-// And it seems UserGroup is needed since the event should be send to a group of users instead of one by one.
 var User = db.define('User', {
   uuid: {
     type: Sequelize.STRING,
     allowNull: false,
     unique: true
+  },
+  battleTag: {
+    field: 'battle_tag',
+    type: Sequelize.STRING,
+    allowNull: false,
+    unique: true
+  },
+  email: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+  reactStatus: {
+    field: 'react_status',
+    type: Sequelize.ENUM,
+    values: ['ACTIVE', 'AFK']
+  },
+  mainCharacterId: {
+    field: 'main_character_id',
+    type: Sequelize.INTEGER,
+    allowNull: true
   }
 }, {
   underscored: true,
   tableName: 'user'
 });
 exports.User = User;
+
+// This table should only be updated by system.
+var Character = db.define('Character', {
+  uuid: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    unique: true
+  },
+  classId: {
+    field: 'class_id',
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  realm: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  level: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
+  averageItemLevel: {
+    field: 'average_item_level',
+    type: Sequelize.INTEGER,
+    allowNull: true
+  },
+  averageItemLevelEquipped: {
+    field: 'average_item_level_equitted',
+    type: Sequelize.INTEGER,
+    allowNull: true
+  }
+}, {
+  underscored: true,
+  tableName: 'character'
+});
+exports.Character = Character;
+
+// This table should only be updated by system.
+var Class = db.define('Class', {
+  uuid: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    unique: true
+  },
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false
+  }
+}, {
+  underscored: true,
+  tableName: 'class'
+});
+exports.Class = Class;
 
 var Notice = db.define('Notice', {
   authorId: {
@@ -87,9 +160,9 @@ var React = db.define('React', {
     type: Sequelize.STRING,
     allowNull: false
   },
-  wowRole: {
-    field: 'wow_role',
-    type: Sequelize.STRING,
+  characterId: {
+    field: 'character_id',
+    type: Sequelize.INTEGER,
     allowNull: true
   },
   replyStatus: {
