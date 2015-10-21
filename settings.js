@@ -72,6 +72,7 @@ exports.DB_TIMEZONE = nconf.get('DB_TIMEZONE') || '+00:00';
  */
 exports.BN_OAUTH = nconf.get('BN_OAUTH') || {'KEY':'', 'SECRET':''};
 exports.BN_CALLBACK = 'https://sjtuwow.azurewebsites.net/auth/login/callback';
+exports.BN_LOGOUT = 'https://www.battlenet.com.cn/login/logout?ref=https://https://sjtuwow.azurewebsites.net/';
 
 /*
  * BN API URLs

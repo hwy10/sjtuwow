@@ -32,6 +32,8 @@ app.use(passport.initialize());
 app.use(passport.session()); 
 
 app.use(function (req, res, next) {
+  //tmp ues
+  console.log(require('util').inspect( req.user));
   var url = req.originalUrl;
   if (url.startsWith(settings.STATIC_URL) || url.startsWith('/auth')) {
     // No auth needed.
@@ -42,7 +44,8 @@ app.use(function (req, res, next) {
     next();
   } else {
     // Page Auth
-    if (!req.session.passport) {
+    var isLogin = require('./routes/auth').isLogin;
+    if (!isLogin(req)) {
       return res.redirect('/auth/login');
     }
     next();

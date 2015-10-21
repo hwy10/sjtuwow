@@ -15,7 +15,8 @@
  * and *req.user*, and contains three fields: id, battletag, accessToken. 
  *
  * TODO
- * Is there some way to notice BN that user has logged out in '/auth/login'
+ * Is there some way to notice BN that user has logged out in '/auth/login', a solution under test
+ * known problem is it can not redirect back to our site
  * 
  */
 
@@ -59,7 +60,18 @@ router.get('/login/callback', passport.authenticate('bnet', { failureRedirect: '
 router.get('/logout', function(req, res){
   req.logout();
   //TODO: is there some way to notice BN that user has logged out?
-  res.redirect('/');
+  // and this solution is under test. known problem is it can not redirect
+  // back to our site.
+  res.redirect(settings.BN_LOGOUT);
 });
 
 module.exports = router;
+
+module.exports.isLogin = function(req)
+{
+  if(req.session.passport && req.session.passport.user) {
+    return true;
+  } else {
+    return false;
+  }
+}
