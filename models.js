@@ -32,7 +32,7 @@ var User = db.define('User', {
   },
   mainCharacterId: {
     field: 'main_character_id',
-    type: Sequelize.INTEGER,
+    type: Sequelize.INTEGER.UNSIGNED,
     allowNull: true
   }
 }, {
@@ -50,7 +50,7 @@ var Character = db.define('Character', {
   },
   classId: {
     field: 'class_id',
-    type: Sequelize.INTEGER,
+    type: Sequelize.INTEGER.UNSIGNED,
     allowNull: false
   },
   name: {
@@ -62,17 +62,17 @@ var Character = db.define('Character', {
     allowNull: false
   },
   level: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.INTEGER.UNSIGNED,
     allowNull: false
   },
   averageItemLevel: {
     field: 'average_item_level',
-    type: Sequelize.INTEGER,
+    type: Sequelize.INTEGER.UNSIGNED,
     allowNull: true
   },
   averageItemLevelEquipped: {
     field: 'average_item_level_equitted',
-    type: Sequelize.INTEGER,
+    type: Sequelize.INTEGER.UNSIGNED,
     allowNull: true
   }
 }, {
@@ -162,7 +162,7 @@ var React = db.define('React', {
   },
   characterId: {
     field: 'character_id',
-    type: Sequelize.INTEGER,
+    type: Sequelize.INTEGER.UNSIGNED,
     allowNull: true
   },
   replyStatus: {
