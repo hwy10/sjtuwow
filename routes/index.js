@@ -1,3 +1,6 @@
+/*jslint unparam: true*/
+/*jslint todo: true*/
+
 var express = require('express');
 var router = express.Router();
 var sql = {
@@ -6,7 +9,9 @@ var sql = {
 };
 /* GET home page. */
 router.get('/', function (req, res, next) {
+  console.log(req.sessionID);
   res.render('index', { activePage: 'index' });
+  // res.send(res);
 });
 router.get('/index/editNotice/:target/:title', function (req, res, next) {
   res.render('notice', {

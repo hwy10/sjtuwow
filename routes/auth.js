@@ -26,6 +26,8 @@
 var express = require('express');
 var router = express.Router();
 
+var querystring = require('querystring');
+
 var BnetStrategy = require('passport-bnet').Strategy;
 var passport = require('passport');
 
@@ -55,14 +57,17 @@ passport.use(new BnetStrategy({
 router.get('/login', passport.authenticate('bnet'));
 router.get('/login/callback', passport.authenticate('bnet', { failureRedirect: 'http://www.battlenet.cn' }),
   function(req, res, callback) { 
-    req.user = JSON.parse(req.user);
-    console.log(req.session.cookie);
-    req.session.passport.user = JSON.parse(req.session.passport.user);
-    res.redirect('/');
+    req.session.cookie.user = JSON.parse(req.session.passport.user);
+    req.session.isLogin = true;
+    req.session.save();
+    var qs = querystring.stringify({
+      'battletag': req.session.cookie.user.battletag
+    });
+    res.redirect('/?' + qs);
   }); 
 
 router.get('/logout', function(req, res){
-  req.logout();
+  req.session.isLogin = null;
   //TODO: is there some way to notice BN that user has logged out?
   // and this solution is under test. known problem is it can not redirect
   // back to our site.
@@ -72,8 +77,12 @@ router.get('/logout', function(req, res){
 module.exports = router;
 
 module.exports.isLogin = function(req) {
-  if(req.session.passport && req.session.passport.user) {
+  if(req.session.isLogin) {
     return true;
   }
   return false;
+};
+
+var onEnd = function(req, res, end) {
+  req.session.resetMaxAge();
 };

@@ -7,10 +7,10 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var session = require('express-session');
+
 var passport = require('passport');
 
 var settings = require('./settings');
-// var auth = require('./libs/auth');
 var SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 var app = express();
@@ -43,16 +43,12 @@ app.use(session({
 
 app.use(settings.STATIC_URL, express.static(settings.STATIC_ROOT));
 
+// init bn agent
 app.use(passport.initialize()); 
-app.use(passport.session()); 
 
 app.use(function (req, res, callback) {
   var url = req.originalUrl;
   if (url.startsWith(settings.STATIC_URL) || url.startsWith('/auth')) {
-    callback();
-  } else if (url.startsWith(settings.API_URL)) {
-    // TODO
-    // API Auth
     callback();
   } else {
     // Page Auth

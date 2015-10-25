@@ -19,20 +19,18 @@ exports.STATIC_ROOT = path.join(__dirname, 'public');
 
 exports.VIEW_ROOT = path.join(__dirname, 'views');
 
+exports.AUTH_HEADER_NAME = 'X-AUTH-TOKEN';
+
 /*
  * API Constants
  */
 exports.API_URL = '/api';
 
 /*
- * Session Constants
- */
-exports.SESSION_NAME = 'sjtuwow';
-
-/*
  * Cookie & Session settings
  */
 exports.COOKIE_TIMEOUT = 24 * 60 * 60 * 1000;
+exports.SESSION_NAME = 'sjtuwow';
 exports.SESSION_TIMEOUT = exports.COOKIE_TIMEOUT;
 exports.SESSION_CHECK_EXPIRE_INTERVAL = 15 * 60 * 1000;
 
