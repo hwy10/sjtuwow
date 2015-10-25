@@ -1,3 +1,6 @@
+/*jslint unparam: true*/
+/*jslint todo: true*/
+
 /*
  * Authentication module
  * To navigate the user to BN login page:
@@ -50,9 +53,10 @@ passport.use(new BnetStrategy({
 }));
 
 router.get('/login', passport.authenticate('bnet'));
-router.get('/login/callback', passport.authenticate('bnet', { failureRedirect: 'http://www.baidu.com' }),
-  function(req, res) { 
+router.get('/login/callback', passport.authenticate('bnet', { failureRedirect: 'http://www.battlenet.cn' }),
+  function(req, res, callback) { 
     req.user = JSON.parse(req.user);
+    console.log(req.session.cookie);
     req.session.passport.user = JSON.parse(req.session.passport.user);
     res.redirect('/');
   }); 
@@ -67,11 +71,9 @@ router.get('/logout', function(req, res){
 
 module.exports = router;
 
-module.exports.isLogin = function(req)
-{
+module.exports.isLogin = function(req) {
   if(req.session.passport && req.session.passport.user) {
     return true;
-  } else {
-    return false;
   }
-}
+  return false;
+};

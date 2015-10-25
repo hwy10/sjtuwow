@@ -30,9 +30,11 @@ exports.API_URL = '/api';
 exports.SESSION_NAME = 'sjtuwow';
 
 /*
- * Cookie timeout
+ * Cookie & Session settings
  */
-exports.COOKIE_TIMEOUT = 7 * 24 * 60 * 60 * 1000;
+exports.COOKIE_TIMEOUT = 24 * 60 * 60 * 1000;
+exports.SESSION_TIMEOUT = exports.COOKIE_TIMEOUT;
+exports.SESSION_CHECK_EXPIRE_INTERVAL = 15 * 60 * 1000;
 
 /*
  * The following constants should be changed in your own config.json at the root of the project.
@@ -77,4 +79,4 @@ exports.BN_LOGOUT = 'https://www.battlenet.com.cn/login/logout?ref=https://https
 /*
  * BN API URLs
  */
-exports.BN_API_HOST = "api.battlenet.com.cn";
+exports.BN_API_HOST = 'api.battlenet.com.cn';
