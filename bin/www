@@ -9,9 +9,11 @@ var settings = require('../settings.js');
 var app = require('../app');
 var debug = require('debug')('sjtuwow:server');
 var https = require('https');
+var http = require('http');
 var fs = require('fs');
 var db = require('../models').db;
 
+app.set('env',settings.ENV)
 /**
  * Normalize a port into a number, string, or false.
  */
@@ -34,18 +36,34 @@ function normalizePort(val) {
 /**
  * Get port from environment and store in Express.
  */
+ 
 var port = normalizePort(process.env.PORT || settings.SEVER_PORT);
 app.set('port', port);
-var httpsopt = {
-  key: fs.readFileSync(settings.SITE_HTTPS_KEY),
-  cert: fs.readFileSync(settings.SITE_HTTPS_CERT)  
-};
 
-/**
- * Create HTTPS server.
- */
+function createServer() {
+  if (app.get('env')=="development") {
+	var httpsopt = {
+      key: fs.readFileSync(settings.SITE_HTTPS_KEY),
+      cert: fs.readFileSync(settings.SITE_HTTPS_CERT)  
+    };
+    
+    /**
+     * Create HTTPS server.
+     */
+    
+    return https.createServer(httpsopt, app);
+  }
+  else {
+    /**
+     * Create HTTP server.
+     */
 
-var server = https.createServer(httpsopt, app);
+    return http.createServer(app);
+  }
+}
+
+var server = createServer()
+
 
 /**
  * Event listener for HTTP server "error" event.

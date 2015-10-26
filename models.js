@@ -106,8 +106,7 @@ var Notice = db.define('Notice', {
   },
   content: {
     type: Sequelize.TEXT,
-    allowNull: false,
-    defaultValue: ''
+    allowNull: false
   }
 }, {
   underscored: true,
@@ -140,8 +139,7 @@ var Event = db.define('Event', {
     allowNull: false,
   },
   description: {
-    type: Sequelize.TEXT,
-    defaultValue: ''
+    type: Sequelize.TEXT
   },
 }, {
   underscored: true,

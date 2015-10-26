@@ -53,6 +53,7 @@ exports.SESSION_CHECK_EXPIRE_INTERVAL = 15 * 60 * 1000;
 /*
  * https setttings
  */
+exports.ENV = nconf.get('ENV') || "development";
 exports.SITE_HTTPS_KEY = nconf.get('SITE_HTTPS_KEY') || path.join(__dirname, 'private_key.pem');
 exports.SITE_HTTPS_CERT = nconf.get('SITE_HTTPS_CERT')|| path.join(__dirname, 'cert.pem');
 
