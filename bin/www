@@ -41,8 +41,15 @@ var port = normalizePort(process.env.PORT || settings.SEVER_PORT);
 app.set('port', port);
 
 function createServer() {
-  if (app.get('env')=="development") {
-	var httpsopt = {
+  if (app.get('env') !== "development") {
+    /**
+     * Create HTTP server.
+     */
+
+    return http.createServer(app);
+  }
+  else {
+    var httpsopt = {
       key: fs.readFileSync(settings.SITE_HTTPS_KEY),
       cert: fs.readFileSync(settings.SITE_HTTPS_CERT)  
     };
@@ -52,13 +59,6 @@ function createServer() {
      */
     
     return https.createServer(httpsopt, app);
-  }
-  else {
-    /**
-     * Create HTTP server.
-     */
-
-    return http.createServer(app);
   }
 }
 

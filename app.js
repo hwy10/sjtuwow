@@ -69,7 +69,7 @@ app.use('/users', require('./routes/users'));
  * development error handler
  *  will print stacktrace
  */
-if (app.get('env') === 'development') {
+if (app.get('env') === 'development' || app.get('env') === 'debug') {
   app.use(function (err, req, res, callback) {
     res.status(err.status || 500);
     res.render('error', {
