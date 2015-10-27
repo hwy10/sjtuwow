@@ -23,6 +23,7 @@
     "sequelize": "~3.12.1",
     "epilogue": "~0.6.2",
     "nconf": "~0.8.2",
-    "method-override": "~2.3.5"
+    "method-override": "~2.3.5",
+	"events": "~1.1.0"
   }
 }

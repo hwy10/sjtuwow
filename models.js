@@ -4,8 +4,7 @@ var Sequelize = require('sequelize');
 var db = new Sequelize(settings.DB_NAME, settings.DB_USERNAME, settings.DB_PASSWORD, {
   host: settings.DB_HOST,
   port: settings.DB_PORT,
-  dialect: settings.DB_DIALECT,
-  timezone: settings.DB_TIMEZONE
+  dialect: settings.DB_DIALECT
 });
 exports.db = db;
 
