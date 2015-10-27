@@ -43,17 +43,16 @@ exports.SESSION_CHECK_EXPIRE_INTERVAL = 15 * 60 * 1000;
  *   "DB_PASSWORD" : "123456",
  *   "BN_OAUTH": {
  * 		"KEY": "your_key",
- *   	"SECRET": "your_key_secret",
- *   },
- *   "SITE_HTTPS_KEY": "/home/your_user/your_private_key.pem"
- *   "SITE_HTTPS_CERT": "/home/your_user/your_cert.pem"
+ *   	"SECRET": "your_key_secret"
+ *   "SITE_HTTPS_KEY": "path_to_your_private_key.pem",
+ *   "SITE_HTTPS_CERT": "path_to_your_cert.pem"
  * }
  */
 
 /*
  * https setttings
  */
-exports.ENV = nconf.get('ENV') || "development";
+exports.ENV = nconf.get('ENV') || 'development';
 exports.SITE_HTTPS_KEY = nconf.get('SITE_HTTPS_KEY') || path.join(__dirname, 'private_key.pem');
 exports.SITE_HTTPS_CERT = nconf.get('SITE_HTTPS_CERT')|| path.join(__dirname, 'cert.pem');
 

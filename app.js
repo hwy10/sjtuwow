@@ -3,7 +3,6 @@
 
 var express = require('express');
 var logger = require('morgan');
-var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var session = require('express-session');
@@ -22,7 +21,6 @@ app.set('views', settings.VIEW_ROOT);
 app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false })); app.use(cookieParser());
 app.use(methodOverride());
 
 // init db
@@ -48,16 +46,13 @@ app.use(passport.initialize());
 
 app.use(function (req, res, callback) {
   var url = req.originalUrl;
-  if (url.startsWith(settings.STATIC_URL) || url.startsWith('/auth')) {
-    callback();
-  } else {
-    // Page Auth
+  if (!(url.startsWith(settings.STATIC_URL) || url.startsWith('/auth'))) {
     var isLogin = require('./routes/auth').isLogin;
     if (!isLogin(req)) {
       return res.redirect('/auth/login');
     }
-    callback();
   }
+  callback();
 });
 
 app.use('/', require('./routes/index'));
