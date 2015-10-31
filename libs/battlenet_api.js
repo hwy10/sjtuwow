@@ -50,11 +50,11 @@ exports.apiRequestBuilder = function(apiUriBuilder, args, callback){
 	  path: apiUriBuilder(args),
 	  method: "GET"
   };
-  console.log("wahaha " + require('util').inspect(args));
+  
   var req = https.request(opt, function(res){
 	  res.setEncoding('utf8');
     var code = res.statusCode;
-    console.log("wahaha type of code = " + (typeof code));
+    
 	  res.on('data', function(data){
       callback(code, data);
     });
