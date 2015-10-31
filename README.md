@@ -1,13 +1,22 @@
 # This is title!!!!!
 
-## How to auth apis
-``
-    # coding=utf-8
+## Simple Doc
 
-    import requests
+### App How to auth
+
+    - Open a broswer to the address: 'https://sjtuwow.azurewebsites.net/auth/login',
+    - Let user complete the auth in the auth page.
+    - Get the token (cookie) and user's battletag, which are needed in the api call, from the last url.
+
+### How to use apis
+
+    ```
+    # coding=utf-8
 
     # Get battletag (used as user_uuid) from the url.
     # Get cookie in the response header['cookie']
+
+    import requests
 
     cookie = 'sjtuwow=s%3A7uIt5RB1AmN_P0F2-1nxvCSKcE2nkVoc.pr3lOW3K0pcQ7O' +\
                  'nkCxFLhM%2F3XiOjfXTajVe%2BP7nG2%2Bw'
@@ -21,17 +30,13 @@
                     verify=False
 
             ).json()
-``
-
+    ```
 
 
 ## TODO List
 
-- Split web pages (views) into an independent project. The backend should only care about restful apis. For eample, the 40X & 50X response will be restful instead of a page.
-- JS & CSS in public should be organized by some frameworks, like bowser, AngularJS, Less or others.
-- BN Client in JS is needed!
-- User system should by designed.
-- Restful APIs doc is needed.
-- Grunt needed?
-- ...
+    - BN Client in JS is needed!
+    - Restful APIs doc is needed.
+    - Grunt needed?
+    - ...
 

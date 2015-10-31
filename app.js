@@ -10,6 +10,8 @@ var session = require('express-session');
 var passport = require('passport');
 
 var settings = require('./settings');
+var error = require('./errors');
+
 var SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 var app = express();
@@ -44,47 +46,27 @@ app.use(settings.STATIC_URL, express.static(settings.STATIC_ROOT));
 // init bn agent
 app.use(passport.initialize()); 
 
-app.use(function (req, res, callback) {
+app.use(function (req, res, next) {
   var url = req.originalUrl;
   if (!(url.startsWith(settings.STATIC_URL) || url.startsWith('/auth'))) {
     var isLogin = require('./routes/auth').isLogin;
     if (!isLogin(req)) {
+      if (url.startsWith(settings.API_URL)) {
+        throw new error.AuthError('Auth Failed.');
+      }
       return res.redirect('/auth/login');
     }
   }
-  callback();
+  next();
 });
 
 app.use('/', require('./routes/index'));
 app.use('/auth', require('./routes/auth'));
 app.use('/users', require('./routes/users'));
 
-/*
- * error handlers
- * development error handler
- *  will print stacktrace
- */
-if (app.get('env') === 'development' || app.get('env') === 'debug') {
-  app.use(function (err, req, res, callback) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
-    });
-  });
-}
 
-/*
- * production error handler
- * no stacktraces leaked to user
- */
-app.use(function (err, req, res, callback) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
-  });
-});
+// Api Error Handler
+app.use(error.error_handler);
 
 module.exports = app;
 
