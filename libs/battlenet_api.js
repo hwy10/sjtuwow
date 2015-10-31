@@ -47,15 +47,15 @@ var https = require('https');
 exports.apiRequestBuilder = function(apiUriBuilder, args, callback){
   var opt = {
     host: settings.BN_API_HOST,
-	  path: apiUriBuilder(args),
-	  method: "GET"
+    path: apiUriBuilder(args),
+    method: "GET"
   };
   
   var req = https.request(opt, function(res){
-	  res.setEncoding('utf8');
+    res.setEncoding('utf8');
     var code = res.statusCode;
     
-	  res.on('data', function(data){
+    res.on('data', function(data){
       callback(code, data);
     });
   });
