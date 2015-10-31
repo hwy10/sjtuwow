@@ -12,7 +12,7 @@
  */
 
 
-var settings = require('./settings.js');
+var settings = require('../settings.js');
 var https = require('https');
 
 /*
