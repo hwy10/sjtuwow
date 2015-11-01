@@ -55,7 +55,7 @@ passport.use(new BnetStrategy({
 }));
 
 router.get('/login', passport.authenticate('bnet'));
-router.get('/login/callback', passport.authenticate('bnet', { failureRedirect: 'http://www.battlenet.cn' }),
+router.get('/login/callback', passport.authenticate('bnet', { failureRedirect: 'http://www.battlenet.com.cn' }),
   function(req, res, callback) { 
     req.session.cookie.user = JSON.parse(req.session.passport.user);
     req.session.isLogin = true;
