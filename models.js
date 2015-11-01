@@ -33,7 +33,8 @@ var User = db.define('User', {
   reactStatus: {
     field: 'react_status',
     type: Sequelize.ENUM,
-    values: ['ACTIVE', 'AFK']
+    values: ['ACTIVE', 'AFK'],
+    defaultValue: 'ACTIVE'
   },
   mainCharacterId: {
     field: 'main_character_id',
@@ -48,15 +49,10 @@ exports.User = User;
 
 // This table should only be updated by system.
 var Character = db.define('Character', {
-  uuid: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    unique: true
-  },
   classId: {
     field: 'class_id',
     type: Sequelize.INTEGER.UNSIGNED,
-    allowNull: false
+    allowNull: true
   },
   name: {
     type: Sequelize.STRING,
@@ -68,17 +64,17 @@ var Character = db.define('Character', {
   },
   level: {
     type: Sequelize.INTEGER.UNSIGNED,
-    allowNull: false
+    allowNull: true
   },
   averageItemLevel: {
     field: 'average_item_level',
     type: Sequelize.INTEGER.UNSIGNED,
-    allowNull: true
+    defaultValue: 0
   },
   averageItemLevelEquipped: {
     field: 'average_item_level_equitted',
     type: Sequelize.INTEGER.UNSIGNED,
-    allowNull: true
+    defaultValue: 0
   }
 }, {
   underscored: true,

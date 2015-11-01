@@ -10,7 +10,6 @@
 
 ### How to use apis
 
-    ```
     # coding=utf-8
 
     # Get battletag (used as user_uuid) from the url.
@@ -30,7 +29,6 @@
                     verify=False
 
             ).json()
-    ```
 
 
 ## TODO List

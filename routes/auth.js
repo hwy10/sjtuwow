@@ -32,6 +32,8 @@ var BnetStrategy = require('passport-bnet').Strategy;
 var passport = require('passport');
 
 var User = require('../models').User;
+var Character = require('../models').Character;
+var error = require('../errors');
 var settings = require('../settings.js');
 
 passport.serializeUser(function(user, done) { 
@@ -56,14 +58,47 @@ passport.use(new BnetStrategy({
 
 router.get('/login', passport.authenticate('bnet'));
 router.get('/login/callback', passport.authenticate('bnet', { failureRedirect: 'http://www.battlenet.com.cn' }),
-  function(req, res, callback) { 
-    req.session.cookie.user = JSON.parse(req.session.passport.user);
-    req.session.isLogin = true;
-    req.session.save();
-    var qs = querystring.stringify({
-      'battletag': req.session.cookie.user.battletag
+  function(req, res, next) { 
+    var user = JSON.parse(req.session.passport.user);
+    User.findAll({
+      where: { 'battleTag': user.battletag }
+    }).then(function (users) {
+      if (users.length > 1) {
+        throw new Error.AuthError('BattleTag  not unique! BattleTag: ' + user.battletag);
+      }
+      if (users.length === 0) {
+        User.create({
+          'uuid': user.id,
+          'battleTag': user.battletag,
+          'reactStatus': 'ACTIVE'
+        });
+      }
+      var bnClient = require('../libs/battlenet_api');
+      bnClient.apiRequestBuilder(
+          bnClient.apiUserWoWProfile,
+          {'accessToken': user.accessToken},
+          function (code, data) {
+            // TODO
+            // Retry? 
+            if(code === 200) {
+              data.characters.forEach(function (character) {
+                console.log(character);
+                Character.findOrCreate({
+                  where: {
+                    'name': character.name,
+                    'realm': character.realm,
+                  }
+                });
+              });
+            }
+          }).end();
+      req.session.cookie.user = user;
+      req.session.isLogin = true;
+      var qs = querystring.stringify({
+        'battletag': req.session.cookie.user.battletag
+      });
+      res.redirect('/?' + qs);
     });
-    res.redirect('/?' + qs);
   }); 
 
 router.get('/logout', function(req, res){

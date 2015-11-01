@@ -50,13 +50,15 @@ exports.apiRequestBuilder = function(apiUriBuilder, args, callback){
     path: apiUriBuilder(args),
     method: "GET"
   };
-  
+
+  console.log(opt);
+
   var req = https.request(opt, function(res){
     res.setEncoding('utf8');
     var code = res.statusCode;
     
     res.on('data', function(data){
-      callback(code, data);
+      callback(code, JSON.parse(data));
     });
   });
   
@@ -66,6 +68,7 @@ exports.apiRequestBuilder = function(apiUriBuilder, args, callback){
   
   return req;
 }
+
 
 /*
  * returns the path for the api to get user's wow profile (characters).
