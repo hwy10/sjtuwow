@@ -63,10 +63,24 @@ exports.apiRequestBuilder = function (apiUriBuilder, args, callback) {
   req.on('error', function(e) {
     callback(-1, e.message);
   });
-  
-  return req;
+
+  req.end();
 };
 
+exports.logout = function (reqHeaders) {
+  var opt = {
+    host: settings.BN_API_HOST,
+    path: settings.BN_LOGOUT,
+    headers: reqHeaders,
+    method: 'GET'
+  };
+
+  var req = https.request(opt, function(res){console.log(res);});
+
+  console.log(req);
+
+  req.end();
+};
 
 /*
  * returns the path for the api to get user's wow profile (characters).

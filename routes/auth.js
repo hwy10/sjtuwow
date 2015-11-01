@@ -91,7 +91,7 @@ router.get('/login/callback', passport.authenticate('bnet', { failureRedirect: '
                 });
               });
             }
-          }).end();
+          });
       req.session.cookie.user = user;
       req.session.isLogin = true;
       var qs = querystring.stringify({
@@ -107,6 +107,12 @@ router.get('/logout', function(req, res){
   //TODO: is there some way to notice BN that user has logged out?
   // and this solution is under test. known problem is it can not redirect
   // back to our site.
+  // 
+  // @Ganzhengye 
+  // the following function not work...... 
+  // require('../libs/battlenet_api').logout(req.headers);
+  // res.redirect('/');
+  
   res.redirect(settings.BN_LOGOUT);
 });
 
