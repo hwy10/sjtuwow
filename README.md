@@ -7,6 +7,7 @@
     - Open a broswer to the address: 'https://sjtuwow.azurewebsites.net/auth/login',
     - Let user complete the auth in the auth page.
     - Get the token (cookie) and user's battletag, which are needed in the api call, from the last url.
+      Like 'https://sjtuwow.azurewebsites.net/?battletag=Cula%235512&Cookie=sjtuwow%3Ds%253AABiJTa-efepoG4jFiffDKS-ifm9H9Zn2.ZBXNiW%252FeyfuwfkcnszRX%252BrXtvFSyH5B0QZu7bz%252BlMt8'
 
 ### How to use apis
 

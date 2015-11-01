@@ -95,7 +95,8 @@ router.get('/login/callback', passport.authenticate('bnet', { failureRedirect: '
       req.session.cookie.user = user;
       req.session.isLogin = true;
       var qs = querystring.stringify({
-        'battletag': req.session.cookie.user.battletag
+        'battletag': user.battletag,
+        'Cookie':res.req.headers.cookie
       });
       res.redirect('/?' + qs);
     });

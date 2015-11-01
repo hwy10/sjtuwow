@@ -5,6 +5,7 @@ var db = new Sequelize(settings.DB_NAME, settings.DB_USERNAME, settings.DB_PASSW
   host: settings.DB_HOST,
   port: settings.DB_PORT,
   dialect: settings.DB_DIALECT,
+  charset: 'utf8',
   // timezone: settings.DB_TIMEZONE,
   pool: {
     maxConnections: 4,

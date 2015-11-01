@@ -44,14 +44,12 @@ var https = require('https');
  *    }
  */
 
-exports.apiRequestBuilder = function(apiUriBuilder, args, callback){
+exports.apiRequestBuilder = function (apiUriBuilder, args, callback) {
   var opt = {
     host: settings.BN_API_HOST,
     path: apiUriBuilder(args),
-    method: "GET"
+    method: 'GET'
   };
-
-  console.log(opt);
 
   var req = https.request(opt, function(res){
     res.setEncoding('utf8');
@@ -67,7 +65,7 @@ exports.apiRequestBuilder = function(apiUriBuilder, args, callback){
   });
   
   return req;
-}
+};
 
 
 /*
@@ -90,8 +88,8 @@ exports.apiRequestBuilder = function(apiUriBuilder, args, callback){
  *   args.accessToken => accessToken in the session.
  */
 exports.apiUserWoWProfile = function(args){
-  return "/wow/user/characters?access_token=" + args.accessToken;
-}
+  return '/wow/user/characters?access_token=' + args.accessToken;
+};
 
 
 /*
@@ -126,14 +124,13 @@ exports.apiUserWoWProfile = function(args){
  *   args.guild  => the name of the guild
  *   args.apiKey => the api key
  */
-exports.apiGuildMembers = function(args)
-{
-  return "/wow/guild/"
-    + args.realm + "/"
+exports.apiGuildMembers = function (args) {
+  return '/wow/guild/'
+    + args.realm + '/'
     + args.guild 
-    + "?fields=members&locale=zh_CN&apikey="
+    + '?fields=members&locale=zh_CN&apikey='
     + args.apiKey;
-}
+};
 
 /*
  * return the path for the api to get the character races data
@@ -148,10 +145,9 @@ exports.apiGuildMembers = function(args)
  * @param args: the parameters to build the path
  *   args.apiKey => the api key
  */
-exports.apiDataCharacterRaces = function(args)
-{
-  return "/wow/data/character/races?locale=zh_CN&apikey=" + args.apiKey;
-}
+exports.apiDataCharacterRaces = function (args) {
+  return '/wow/data/character/races?locale=zh_CN&apikey=' + args.apiKey;
+};
 
 /*
  * return the path for the api to get the character classes data
@@ -166,9 +162,8 @@ exports.apiDataCharacterRaces = function(args)
  * @param args: the parameters to build the path
  *   args.apiKey => the api key
  */
-exports.apiDataCharacterClasses = function(args)
-{
-  return "/wow/data/character/classes?locale=zh_CN&apikey=" + args.apiKey;
-}
+exports.apiDataCharacterClasses = function (args) {
+  return '/wow/data/character/classes?locale=zh_CN&apikey=' + args.apiKey;
+};
 
 //TODO: apis to be implemted....
