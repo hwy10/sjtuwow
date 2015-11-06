@@ -5,32 +5,50 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='/static/stylesheets/bootstrap.css')
+    link(rel='stylesheet', href='/static/stylesheets/bootstrap.min.css')
     link(rel='stylesheet', href='/static/stylesheets/style.css')
     script(type='text/javascript', src='/static/javascripts/jquery.min.js')
     script(type='text/javascript', src='/static/javascripts/bootstrap.min.js')
-    script(type='text/javascript', src='/static/javascripts/knockout.min.js')
+    script(type='text/javascript', src='/static/javascripts/angular.min.js')
+    script(type='text/javascript', src='/static/javascripts/layout.js')
     link(rel='shortcut icon', type='image/x-icon', href=logo, media='screen')
   body
-    nav.navbar.navbar-default
-      div.container
-        div.navbar-header
-          a.navbar-brand(href='#')
-            span
-              img.brand(alt=title,src=logo,width='30',height='30')
-            span #{title}
-        div.collapse.navbar-collapse
-          ul.nav.navbar-nav
-            li(class=(activePage == 'index' ? 'active' : ''))
-              a(href='/') 主页
-            li(class=(activePage == 'changeInfo' ? 'active' : ''))
-              a(href='/users/changeInfo') 修改信息
-            li(class=(activePage == 'newActivity' ? 'active' : ''))
-              a(href='/activity/newActivity') 创建活动
-          ul.nav.navbar-nav.navbar-right
-            li.dropdown
-              if (user)
-                a(href='#',class="dropdown-toggle",data-toggle="dropdown",role="button",aria-haspopup="true",aria-expanded="false") #{user.name}
+    div.wrapper(ng-app="sjtuwow",ng-controller="layout")
+      div#loader(ng-show="loaderCount > 0",ng-attr-count="{{loaderCount}}")
+        div.spinner
+          div.spinner-container.container1
+            div.circle1
+            div.circle2
+            div.circle3
+            div.circle4
+          div.spinner-container.container2
+            div.circle1
+            div.circle2
+            div.circle3
+            div.circle4
+          div.spinner-container.container3
+            div.circle1
+            div.circle2
+            div.circle3
+            div.circle4
+      nav.navbar.navbar-default
+        div.container
+          div.navbar-header
+            a.navbar-brand(href='#')
+              span
+                img.brand(alt=title,src=logo,width='30',height='30')
+              span #{title}
+          div.collapse.navbar-collapse
+            ul.nav.navbar-nav
+              li(ng-class="activePage() === 'index' ? 'active' : 'inactive'")
+                a(href='/') 主页
+              li(ng-class="activePage() === 'users' ? 'active' : 'inactive'")
+                a(href='/users/changeInfo') 修改信息
+              li(ng-class="activePage() === 'activity' ? 'active' : 'inactive'")
+                a(href='/activity/newActivity') 创建活动
+            ul.nav.navbar-nav.navbar-right
+              li.dropdown(ng-show="user")
+                a(href='#',class="dropdown-toggle",data-toggle="dropdown",role="button",aria-haspopup="true",aria-expanded="false") {{user.battleTag}}
                   span.caret
                 ul.dropdown-menu
                   li
@@ -39,18 +57,6 @@ html
                     a(href='/') 查看活动
                   li
                     a(href='/auth/logout') 登出
-              else
-                a(href='#',class="dropdown-toggle",data-toggle="dropdown",role="button",aria-haspopup="true",aria-expanded="false") 尚未登录
-                  span.caret
-                ul.dropdown-menu
-                  li
-                    a(href='/users/register') 注册
-                  li
-                    a(href='/users/login') 登陆
-                  li
-                    a(href='/auth/login') BN_login
-                  li
-                    a(href='/auth/logout') BN_logout
-            
-  block content
+              
+      block content
 

@@ -20,3 +20,6 @@ $(document).ready(function(){
 	})
 })
 
+if(!app) {
+  var app = angular.module('sjtuwow',[])
+}

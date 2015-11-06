@@ -9,13 +9,21 @@ block content
             div.panel-title 
               a.notice(href="#",data-target="notice",data-bind="{click:updateNotice}") 通知公告
           div.panel-body
-            div#notice
+            div#notice(ng-bind="notice")
         div.panel.panel-primary
           div.panel-heading
             div.panel-title
               a.notice(href="#",data-target="resource",data-bind="{click:updateNotice}") 资源分享
           div.panel-body
-            div#resource
+            div#resource(ng-bind="resource")
       
       div.col-md-8
+        div.activity
+            table.table
+                thread
+                    tr
+                        
+                tbody
+        div.activity-all
+  script(type='text/javascript',src="/static/javascripts/markdown.min.js")
   script(type='text/javascript',src="/static/javascripts/index.js")
