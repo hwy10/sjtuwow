@@ -1,19 +1,19 @@
 extends layout
 
 block content
-  div.container
+  div.container(ng-controller="index")
     div.row
       div.col-md-4
         div.panel.panel-primary
           div.panel-heading
             div.panel-title 
-              a.notice(href="#",data-target="notice",data-bind="{click:updateNotice}") 通知公告
+              a.notice(href="#",data-target="notice",ng-click='updateNotice("notice")') 通知公告
           div.panel-body
             div#notice(ng-bind="notice")
         div.panel.panel-primary
           div.panel-heading
             div.panel-title
-              a.notice(href="#",data-target="resource",data-bind="{click:updateNotice}") 资源分享
+              a.notice(href="#",data-target="resource",ng-click='updateNotice("resource")') 资源分享
           div.panel-body
             div#resource(ng-bind="resource")
       

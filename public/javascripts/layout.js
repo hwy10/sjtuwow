@@ -7,7 +7,7 @@ app.factory('httpLoad',['$http', 'loaderCount', function($http, loaderCount) {
     loaderCount-=1;
     }
   }]);
-app.controller("layout",function($scope, $http, loaderCount, httpLoad) {
+app.controller("layout",function($scope, loaderCount, httpLoad) {
   $scope.activePage = function() {
     var path = window.location.pathname;
     var arr = path.split("/");
@@ -15,13 +15,7 @@ app.controller("layout",function($scope, $http, loaderCount, httpLoad) {
     }
   $scope.user = null;
   $scope.loaderCount = loaderCount;
-  $scope.$watch(function(){
-    $("#loader").attr("count"), function(n, o) {
-      $scope.loaderCount = n;
-    }
-  })
   httpLoad({url:"/users"}, function(response) {
       $scope.user = response;
-      $scope.loaderCount-=1;
-    }, function() {})
+    }, function() {});
   })
